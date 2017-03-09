@@ -1,0 +1,140 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+ 	<meta charset="UTF-8">
+ 	<title>tab事件</title>
+ 	<style>
+ 	    * {margin:0;padding: 0;}
+ 	    .clearfix:after{content:"";display:block;clear:both;}
+        .clearfix{zoom:1;}
+ 		.content {width: 500px;border:1px solid #ccc;margin: 30px;position: relative; }
+ 		.title {}
+ 		.title ul {list-style-type: none;}
+ 		.title ul li {float: left;width: 100px;text-align: center;height: 30px;line-height: 30px;background-color: #ddd;}
+ 		.title ul li.here {background-color: #fff;font-weight: bold;}
+ 		.title ul li a{text-decoration: none;color:#000;}
+ 		.title ul li a:hover {color:red;}
+ 		.con {height: 80px;overflow: hidden;}
+ 		.item {position: absolute;left: 0;top:30px; display: none;padding: 10px;}/*relative和absolute要在已经定位的祖先元素上*/
+ 		.item:first-of-type {display: block;}
+ 		.item li {float:left;width: 50%;list-style-type: none;}
+ 		.item li a {text-decoration: none;color:#000;line-height: 30px;height: 30px;}
+ 		
+ 	</style>
+ </head>
+ <body>
+ 	<div class="content">
+ 		<div class="title" id="title">
+ 			<ul class="clearfix">
+ 				<li class="here"><a href="#">公告</a></li>
+ 				<li ><a href="#">规则</a></li>
+ 				<li ><a href="#">论坛</a></li>
+ 				<li><a href="#">安全</a></li>
+ 				<li><a href="#">工艺</a></li>
+ 			</ul>
+ 		</div>
+ 		<div class="con" id="item">
+ 		
+ 		<ul class="clearfix item">
+ 			<li><a href="#"><span>[<a href="">通知</a>]</span><a href="javascript:void(0)">"滥发"即将换新</a></a></li>
+ 			<li><a href="#">阿里2000万驰援灾区</a></li>
+ 			<li><a href="#">阿里:加重刑罚治理假货</a></li>
+ 			<li><a href="#">世界银行点赞"淘宝村"</a></li>
+ 		</ul>
+ 		<ul class="item clearfix ">
+ 			<li><a href="#">七天无理由退货规则发布</a></li>
+ 			<li><a href="#">未经准入规则变更新</a></li>
+ 			<li><a href="#">增发布混淆信息规则</a></li>
+ 			<li><a href="#">扰乱市场秩序规则变更"</a></li>
+ 		</ul>
+ 		<ul class="item clearfix">
+ 			<li><a href="#">老司机教你玩数据</a></li>
+ 			<li><a href="#">淘宝招募志愿者</a></li>
+ 			<li><a href="#">如何做好内容营销</a></li>
+ 			<li><a href="#">十八纸颠覆家具想象</a></li>
+ 		</ul>
+ 		<ul class="item clearfix">
+ 			<li><a href="#">七贩卖信息被一锅端</a></li>
+ 			<li><a href="#">中国制造的守护者</a></li>
+ 			<li><a href="#">免单、返现那些事</a></li>
+ 			<li><a href="#">这样的投诉你怕不怕</a></li>
+ 		</ul>
+ 		<ul class="item clearfix">
+ 			<li><a href="#">大众评审乡村医院开建</a></li>
+ 			<li><a href="#">闲鱼公益上线招募NGO</a></li>
+ 			<li><a href="#">阿里与残联出助残政策</a></li>
+ 			<li><a href="#">公益宝贝卖家发票索取</a></li>
+ 		</ul>
+ 		</div>
+ 	</div>
+ 	<script>
+ 		function $(str){
+ 			return typeof str ==='string'?document.getElementById(str):str;
+ 		}
+ 		// var oli = $('title').getElementsByTagName('li');
+ 		// var items = $('item').getElementsByTagName('ul');
+ 		// for (var i = 0; i < oli.length; i++) {
+ 		// 	oli[i].index = i; 
+ 		// 	oli[i].onmouseover = function(){
+
+ 		// 		var timer = null;
+ 		// 		var that = this;
+ 		// 		if (timer) {clearTimeout(timer);}
+ 		// 		 timer = setTimeout(function(){
+ 		// 		 	 for (var i = 0; i < oli.length; i++) {
+ 		// 			oli[i].className = '';
+ 		// 			items[i].style.display ='none';
+
+ 		// 		}
+ 		// 		that.className = 'here';
+ 		// 		items[that.index].style.display = 'block';
+ 		// 		 },500)
+ 				
+ 				
+ 		// 	}
+ 		// }
+ 		window.onload = tab;
+ 		function tab(){
+        var timer=null;
+        var num = 0;
+        var oli = $('title').getElementsByTagName('li');
+ 		    var items = $('item').getElementsByTagName('ul');
+        for (var i = 0; i < oli.length; i++) {
+        	oli[i].index = i;
+        	oli[i].onmouseover = function(){
+        		if (timer) {clearTimeout(timer);}
+        	     autoplay(this.index);
+        	}
+        	oli[i].onmouseout =function(){
+        		timer = setInterval(auto,1000);
+     
+        	}
+        	$("item").onmouseover = function(){
+        	 	clearInterval(timer);
+        	 }
+
+		      $("item").onmouseout = function(){
+			    timer = setInterval(auto,2000);
+            }
+        }
+        if(timer){clearTimeout(timer);timer =null;}
+        timer = setInterval(auto,1000);
+        function auto(){
+       	      num ++;
+              if (num >= oli.length) { num = 0;}
+              autoplay(num);
+       }
+ 		   function autoplay(target){
+      	console.log(target);
+      	for (var i = 0; i < oli.length; i++) {
+ 		 			oli[i].className = '';
+ 		 			items[i].style.display ='none'
+ 		 		}
+ 	 		    oli[target].className = 'here';
+ 		 		items[target].style.display = 'block';
+ 		 		num = target;
+ 		       }
+ 		}
+ 	</script>
+ </body>
+ </html>
